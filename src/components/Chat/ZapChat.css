@@ -73,6 +73,7 @@ body, html {
   .chat-input input {
     flex-grow: 1;
     padding: 10px;
+    width: 85%;
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-right: 12px;

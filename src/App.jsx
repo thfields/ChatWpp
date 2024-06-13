@@ -1,4 +1,4 @@
-import ZapChat from './components/ZapChat';
+import ZapChat from './components/Chat/ZapChat';
 
 const App = () => {
   return (
