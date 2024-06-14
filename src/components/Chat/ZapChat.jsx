@@ -7,11 +7,23 @@ import './ZapChat.css';
 const contactProfileImages = {
   "Vitor": "/src/assets/vitor.PNG",
   "(84) 99617-1333": "/src/assets/sem-foto.png",
-  "Thiago": "/src/assets/thiago.PNG"
+  "Thiago": "/src/assets/thiago.PNG",
+  "(84) 99617-1333": "/src/assets/sem-foto.png",
+  "(84) 99617-1333": "/src/assets/sem-foto.png",
+  "(84) 99617-1333": "/src/assets/sem-foto.png",
+  "(84) 99617-1333": "/src/assets/sem-foto.png",
+  "(84) 99617-1333": "/src/assets/sem-foto.png",
 };
 
 const ZapChat = () => {
-  const initialContacts = ["Vitor", "(84) 99617-1333", "Thiago"];
+  const initialContacts = [
+    "Vitor", "(84) 99617-1333", "Thiago"
+    , "(84) 99617-1333"
+    , "(84) 99617-1333"
+    , "(84) 99617-1333"
+    , "(84) 99617-1333"
+    , "(84) 99617-1333"
+  ];
 
   const [selectedContact, setSelectedContact] = useState(null);
   const [messageInput, setMessageInput] = useState('');
