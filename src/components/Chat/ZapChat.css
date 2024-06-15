@@ -10,7 +10,12 @@ body, html {
 .whatsapp-layout {
   display: flex;
   height: 100vh;
+  background-image: url('/src/assets/inicial.PNG'); /* Caminho para sua imagem de fundo */
+  background-size: cover; /* Cobrir todo o espaço disponível */
+  background-position: center; /* Centralizar a imagem */
+  background-repeat: no-repeat; /* Evitar repetição da imagem */
 }
+
 
 .sidebar {
   width: 30%;
@@ -62,7 +67,7 @@ body, html {
   overflow-y: auto;
 }
 
-.buttons-chat{
+.buttons-chat {
   display: flex;
   justify-content: space-between;
   padding: 16px;
@@ -71,12 +76,31 @@ body, html {
 .message {
   margin-bottom: 12px;
   padding: 8px;
-  background-color: #f0f0f0;
   border-radius: 8px;
   color: black;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end; /* Ajuste para alinhar o conteúdo à direita por padrão */
+}
+
+.sent {
+  background-color: #dcf8c6; /* Background color for sent messages */
+  align-self: flex-end;
+  justify-self: flex-end; /* Alinha o conteúdo para a direita */
+}
+
+.received {
+  background-color: #ffffff; /* Background color for received messages */
+  align-self: flex-start;
+  justify-self: flex-start; /* Alinha o conteúdo para a esquerda */
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column; /* Ajuste para que as mensagens empilhem verticalmente */
 }
 
 .file-message {
@@ -134,3 +158,11 @@ body, html {
   border: 1px solid #ccc;
   border-radius: 8px;
 }
+
+.emoji-picker-react {
+  position: absolute;
+  bottom: 60px;
+  left: 20px;
+  z-index: 1000;
+}
+
