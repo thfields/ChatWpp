@@ -1,28 +1,19 @@
-// src/components/ZapChat.jsx
-
 import { useState } from 'react';
 import './ZapChat.css';
+import { Chat, Microphone, Paperclip, Phone, Smiley, DownloadSimple } from "@phosphor-icons/react";
 
 // Mapeamento de nomes de contatos para URLs das imagens de perfil
 const contactProfileImages = {
   "Vitor": "/src/assets/vitor.PNG",
   "(84) 99617-1333": "/src/assets/sem-foto.png",
   "Thiago": "/src/assets/thiago.PNG",
-  "(84) 99617-1333": "/src/assets/sem-foto.png",
-  "(84) 99617-1333": "/src/assets/sem-foto.png",
-  "(84) 99617-1333": "/src/assets/sem-foto.png",
-  "(84) 99617-1333": "/src/assets/sem-foto.png",
-  "(84) 99617-1333": "/src/assets/sem-foto.png",
 };
 
 const ZapChat = () => {
   const initialContacts = [
-    "Vitor", "(84) 99617-1333", "Thiago"
-    , "(84) 99617-1333"
-    , "(84) 99617-1333"
-    , "(84) 99617-1333"
-    , "(84) 99617-1333"
-    , "(84) 99617-1333"
+    "Vitor", 
+    "(84) 99617-1333", 
+    "Thiago"
   ];
 
   const [selectedContact, setSelectedContact] = useState(null);
@@ -50,7 +41,8 @@ const ZapChat = () => {
     }
     const newMessage = {
       sender: 'Me',
-      content: messageInput.trim()
+      content: messageInput.trim(),
+      file: null
     };
     setContactsMessages({
       ...contactsMessages,
@@ -69,6 +61,21 @@ const ZapChat = () => {
     setSearchTerm(event.target.value);
   };
 
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && selectedContact) {
+      const newMessage = {
+        sender: 'Me',
+        content: file.name,
+        file: URL.createObjectURL(file) // Gera uma URL temporária para o arquivo
+      };
+      setContactsMessages({
+        ...contactsMessages,
+        [selectedContact]: [...contactsMessages[selectedContact], newMessage]
+      });
+    }
+  };
+
   const filteredContacts = initialContacts.filter(contact =>
     contact.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -77,7 +84,7 @@ const ZapChat = () => {
     <div className="whatsapp-layout">
       <div className="sidebar">
         <div className="sidebar-header">
-          <h2>Contatos</h2>
+          <h2><Chat size={32} /> Contatos</h2>
           <input
             type="text"
             placeholder="Pesquisar contatos"
@@ -100,17 +107,36 @@ const ZapChat = () => {
           {selectedContact && (
             <div className="contact-info">
               <img src={contactProfileImages[selectedContact]} alt={`${selectedContact}'s Profile`} className="profile-img" />
-              <h2 className="contact-name">{selectedContact}</h2>
+              <h2 className="contact-name">{selectedContact}</h2><Phone size={32} />
             </div>
           )}
         </div>
         <div className="chat-messages">
           {selectedContact && contactsMessages[selectedContact] && contactsMessages[selectedContact].map((msg, index) => (
-            <div key={index} className="message">{msg.sender}: {msg.content}</div>
+            <div key={index} className="message">
+              <span>{msg.sender}: {msg.file ? '' : msg.content}</span>
+              {msg.file && (
+                <div className="file-message">
+                  <a href={msg.file} download={msg.content}>
+                    <DownloadSimple size={16} /> {msg.content}
+                  </a>
+                </div>
+              )}
+            </div>
           ))}
         </div>
         {selectedContact && (
           <div className="chat-input">
+            <button><Smiley size={22} /></button>
+            <input
+              type="file"
+              id="file-input"
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+            />
+            <button onClick={() => document.getElementById('file-input').click()}>
+              <Paperclip size={22} />
+            </button>
             <input
               type="text"
               placeholder={`Enviar mensagem para ${selectedContact}`}
@@ -118,7 +144,7 @@ const ZapChat = () => {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
             />
-            <button onClick={handleSendMessage}>Enviar</button>
+            <button><Microphone size={22} /></button>
           </div>
         )}
       </div>
