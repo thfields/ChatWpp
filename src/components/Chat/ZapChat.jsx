@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import './ZapChat.css';
-import { Chat, Paperclip, Phone, Smiley, DownloadSimple, Microphone } from "@phosphor-icons/react";
+import { 
+  Chat, Paperclip, Phone, Smiley, 
+  DownloadSimple, Microphone, DotsThreeOutlineVertical 
+} from "@phosphor-icons/react";
 import Picker from 'emoji-picker-react';
-import InicialScreen from '../InicialSreen/InicialScreen'; // Importe o componente InicialScreen
+import InicialScreen from '../../pages/InicialScreen/InicialScreen'; // Importe o componente InicialScreen
 
-// Mapeamento de nomes de contatos para URLs das imagens de perfil
 const contactProfileImages = {
   "Vitor": "/src/assets/vitor.PNG",
   "(84) 99617-1333": "/src/assets/sem-foto.png",
@@ -88,7 +90,11 @@ const ZapChat = () => {
     <div className="whatsapp-layout">
       <div className="sidebar">
         <div className="sidebar-header">
-          <h2><Chat size={32} /> Contatos</h2>
+          <div className="sidebar-header-left">
+            <Chat size={32} />
+            <h2>Contatos</h2>
+          </div>
+          <DotsThreeOutlineVertical size={22} className="sidebar-header-icon" />
           <input
             type="text"
             placeholder="Pesquisar contatos"
@@ -114,7 +120,9 @@ const ZapChat = () => {
               {selectedContact && (
                 <div className="contact-info">
                   <img src={contactProfileImages[selectedContact]} alt={`${selectedContact}'s Profile`} className="profile-img" />
-                  <h2 className="contact-name">{selectedContact}</h2><Phone size={32} />
+                  <h2 className="contact-name">{selectedContact}</h2>
+                  <Phone size={32} />
+                  <DotsThreeOutlineVertical size={22} />
                 </div>
               )}
             </div>
