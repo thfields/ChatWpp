@@ -1,3 +1,4 @@
+/* Reset básico */
 body, html {
   margin: 0;
   padding: 0;
@@ -5,6 +6,7 @@ body, html {
   font-family: Arial, sans-serif;
 }
 
+/* Estilos para o layout principal */
 .whatsapp-layout {
   display: flex;
   height: 100vh;
@@ -14,9 +16,7 @@ body, html {
   background-repeat: no-repeat; /* Evitar repetição da imagem */
 }
 
-
-
-
+/* Estilos para a barra lateral (sidebar) */
 .sidebar {
   width: 30%;
   background-color: #075e54;
@@ -27,7 +27,8 @@ body, html {
 .sidebar-header {
   padding: 16px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Alinhar os itens no espaço entre eles */
 }
 
 .sidebar-header-left {
@@ -36,119 +37,51 @@ body, html {
   gap: 10px;
 }
 
-.sidebar-header-icon {
-  align-self: flex-end;
-  margin-top: 10px;
+.sidebar-header-text {
+  margin: 0;
+  font-size: 2rem;
 }
 
+.search-input {
+  padding: 16px;
+  margin-top: 20px;
+  width: 85%;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffffff; /* Cor de fundo do campo de pesquisa */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); /* Sombra suave */
+  font-size: 0.9rem; /* Tamanho da fonte */
+  color: #333; /* Cor do texto */
+  margin-top: 10px;
+  margin-left: 20px; /* Ajustado o margin-left para alinhamento com os contatos */
+  margin-right: 20px; /* Ajustado o margin-right para manter o espaçamento adequado */
+  margin-bottom: 10px;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 3px rgba(0, 0, 0, 0.24); /* Efeito de foco */
+}
+
+.search-input::placeholder {
+  color: #aaa; /* Cor do placeholder */
+}
+
+/* Estilos para a lista de contatos */
 .contact-list {
   padding: 16px;
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 .contact {
+  display: flex;
+  align-items: center;
   padding: 12px;
   cursor: pointer;
 }
 
 .contact:hover {
   background-color: rgba(255, 255, 255, 0.1);
-}
-
-.chat-area {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-  height: 100%;
-}
-
-.chat-header {
-  padding: 1px;
-  background-color: #128c7e;
-  color: white;
-}
-
-.chat-header h2 {
-  margin: 0.5em;
-}
-
-.chat-messages {
-  flex-grow: 1;
-  padding: 16px;
-  overflow-y: auto;
-}
-
-.buttons-chat {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px;
-}
-
-.message {
-  margin-bottom: 12px;
-  padding: 8px;
-  border-radius: 8px;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end; /* Ajuste para alinhar o conteúdo à direita por padrão */
-}
-
-.sent {
-  background-color: #dcf8c6; /* Background color for sent messages */
-  align-self: flex-end;
-  justify-self: flex-end; /* Alinha o conteúdo para a direita */
-}
-
-.received {
-  background-color: #ffffff; /* Background color for received messages */
-  align-self: flex-start;
-  justify-self: flex-start; /* Alinha o conteúdo para a esquerda */
-}
-
-.chat-messages {
-  flex-grow: 1;
-  padding: 16px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column; /* Ajuste para que as mensagens empilhem verticalmente */
-}
-
-.file-message {
-  display: flex;
-  align-items: center;
-}
-
-.chat-input {
-  padding: 16px;
-  background-color: #f0f0f0;
-  border-top: 1px solid #ccc;
-  display: flex;
-  align-items: center;
-}
-
-.chat-input input[type="text"] {
-  flex-grow: 1;
-  padding: 10px;
-  width: 80%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-right: 12px;
-}
-
-.chat-input button {
-  padding: 5px 10px;
-  background-color: #075e54;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  margin-right: 12px;
-  cursor: pointer;
-}
-
-.chat-input button:hover {
-  background-color: #064c48;
 }
 
 .profile-img {
@@ -158,21 +91,148 @@ body, html {
   margin-right: 10px;
 }
 
+.contact-name {
+  flex-grow: 1;
+}
+
+.contact.selected {
+  background-color: #128c7e; /* Cor de fundo quando selecionado */
+}
+
+/* Estilos para a área do chat */
+.chat-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 100%;
+  background-color: #f0f0f0;
+  border-top: 1px solid #ccc;
+}
+
+.chat-header {
+  padding: 12px 16px;
+  background-color: #128c7e;
+  color: white;
+  display: flex;
+  justify-content: space-between; /* Alinhar os itens no espaço entre eles */
+  align-items: center;
+}
+
 .contact-info {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
+  flex-grow: 1;
 }
 
-.search-input {
-  width: 80%;
-  padding: 5px;
-  border: 1px solid #ccc;
+.contact-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.contact-name {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.icons-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icons-left > svg {
+  fill: white; /* Para garantir que os ícones tenham a cor branca */
+}
+
+.chat-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.chat-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-header-right .dots-icon {
+  margin-left: auto; /* Empurra os três pontinhos para o canto direito */
+}
+
+.icon-chat {
+  display: flex;
+  width: auto; /* Removido o valor fixo da largura */
+  margin-left: 0; /* Removido margin-left desnecessário */
+  gap: 25px;
+  justify-content: flex-start; /* Alinhar ícones à esquerda */
+}
+
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column; /* Ajuste para que as mensagens empilhem verticalmente */
+}
+
+.message {
+  margin-bottom: 12px;
+  padding: 8px;
   border-radius: 8px;
-  margin-top: 10px;
+  color: black;
 }
 
-.emoji-picker-react {
+.message.sent {
+  background-color: #dcf8c6; /* Background color for sent messages */
+  align-self: flex-end;
+}
+
+.message.received {
+  background-color: #ffffff; /* Background color for received messages */
+  align-self: flex-start;
+}
+
+.chat-input {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  background-color: white; /* Fundo branco para área de entrada */
+  border-top: 1px solid #ccc; /* Linha superior */
+}
+
+.chat-input input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 12px;
+  height: 32px; /* Altura do campo de texto */
+}
+
+.chat-input button {
+  padding: 8px;
+  background-color: #075e54;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-right: 12px;
+  cursor: pointer;
+  height: 52px; /* Altura dos botões */
+  width: 50px;
+}
+
+
+.chat-input button:hover {
+  background-color: #064c48;
+}
+
+.emoji-picker {
   position: absolute;
   bottom: 60px;
   left: 20px;
