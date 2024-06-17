@@ -1,15 +1,17 @@
 /* eslint-disable react/prop-types */
 import { useState, useRef } from 'react';
-import { Microphone, Stop, PaperPlaneTilt  } from "@phosphor-icons/react";
+import { Microphone, Stop, PaperPlaneTilt } from "@phosphor-icons/react";
 
 const AudioRecorder = ({ onSendAudio }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const mediaRecorderRef = useRef(null);
+  const mediaStreamRef = useRef(null);
 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaStreamRef.current = stream;
       mediaRecorderRef.current = new MediaRecorder(stream);
       const chunks = [];
 
@@ -20,6 +22,8 @@ const AudioRecorder = ({ onSendAudio }) => {
       mediaRecorderRef.current.onstop = () => {
         const blob = new Blob(chunks, { type: 'audio/wav' });
         setAudioBlob(blob);
+        // Parar o fluxo de mídia
+        mediaStreamRef.current.getTracks().forEach(track => track.stop());
       };
 
       mediaRecorderRef.current.start();
@@ -51,7 +55,7 @@ const AudioRecorder = ({ onSendAudio }) => {
         <button onClick={startRecording}><Microphone size={32} /></button>
       )}
       {audioBlob && (
-        <button onClick={sendAudio}><PaperPlaneTilt  size={32} /></button>
+        <button onClick={sendAudio}><PaperPlaneTilt size={32} /></button>
       )}
     </div>
   );
