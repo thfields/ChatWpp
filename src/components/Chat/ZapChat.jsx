@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './ZapChat.css';
 import Contacts from '../Contacts/Contacts';
 import ChatArea from '../ChatArea/ChatArea';
+import MessageInput from '../MessageInput/MessageInput';
 
 const contactProfileImages = {
   "Vitor": "/src/assets/vitor.PNG",
@@ -57,6 +58,19 @@ const ZapChat = () => {
     }
   };
 
+  const handleSendAudio = (audioBlob) => {
+    const url = URL.createObjectURL(audioBlob);
+    const newMessage = {
+      sender: 'Me',
+      content: 'Audio message',
+      file: url
+    };
+    setContactsMessages({
+      ...contactsMessages,
+      [selectedContact]: [...contactsMessages[selectedContact], newMessage]
+    });
+  };
+
   return (
     <div className="whatsapp-layout">
       <Contacts
@@ -67,14 +81,23 @@ const ZapChat = () => {
         searchTerm={searchTerm}
         onSearchChange={handleSearch}
       />
-      <ChatArea
-        selectedContact={selectedContact}
-        contactProfileImages={contactProfileImages}
-        contactsMessages={contactsMessages}
-        onSendMessage={handleSendMessage}
-        onFileChange={handleFileChange}
-      />
+      <div className="chat-section">
+        <ChatArea
+          selectedContact={selectedContact}
+          contactProfileImages={contactProfileImages}
+          contactsMessages={contactsMessages}
+        />
+        {selectedContact && (
+          <MessageInput
+            selectedContact={selectedContact}
+            onSendMessage={handleSendMessage}
+            onFileChange={handleFileChange}
+            onSendAudio={handleSendAudio}
+          />
+        )}
+      </div>
     </div>
+
   );
 };
 

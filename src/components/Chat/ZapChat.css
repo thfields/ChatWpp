@@ -100,14 +100,21 @@ body, html {
 }
 
 /* Estilos para a área do chat */
+.chat-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #f0f0f0;
+  border-left: 1px solid #ccc;
+}
+
 .chat-area {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  width: 70%;
-  height: 100%;
-  background-color: #f0f0f0;
-  border-top: 1px solid #ccc;
+  height: 100%; /* Adicionado */
+  background-color: #e5ddd5; /* Ajustado para uma cor de fundo que combine */
 }
 
 .chat-header {
@@ -133,51 +140,21 @@ body, html {
   margin-right: 10px;
 }
 
-.contact-name {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.icons-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.icons-left > svg {
-  fill: white; /* Para garantir que os ícones tenham a cor branca */
-}
-
 .chat-header h2 {
   margin: 0;
   font-size: 1.2rem;
 }
 
-.chat-header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.chat-header-right .dots-icon {
-  margin-left: auto; /* Empurra os três pontinhos para o canto direito */
-}
-
 .icon-chat {
   display: flex;
-  width: auto; /* Removido o valor fixo da largura */
-  margin-left: 0; /* Removido margin-left desnecessário */
   gap: 25px;
-  justify-content: flex-start; /* Alinhar ícones à esquerda */
 }
-
 
 .chat-messages {
   flex-grow: 1;
-  padding: 16px;
-  overflow-y: auto;
   display: flex;
-  flex-direction: column; /* Ajuste para que as mensagens empilhem verticalmente */
+  flex-direction: column;
+  overflow-y: auto; /* Garantir que as mensagens rolem */
 }
 
 .message {
@@ -188,12 +165,12 @@ body, html {
 }
 
 .message.sent {
-  background-color: #dcf8c6; /* Background color for sent messages */
+  background-color: #dcf8c6; /* Cor de fundo para mensagens enviadas */
   align-self: flex-end;
 }
 
 .message.received {
-  background-color: #ffffff; /* Background color for received messages */
+  background-color: #ffffff; /* Cor de fundo para mensagens recebidas */
   align-self: flex-start;
 }
 
@@ -208,7 +185,6 @@ body, html {
 .chat-input input[type="text"] {
   flex-grow: 1;
   padding: 10px;
-  width: 80%;
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-right: 12px;
@@ -223,10 +199,9 @@ body, html {
   border-radius: 5px;
   margin-right: 12px;
   cursor: pointer;
-  height: 52px; /* Altura dos botões */
+  height: 50px; /* Altura dos botões */
   width: 50px;
 }
-
 
 .chat-input button:hover {
   background-color: #064c48;
@@ -237,4 +212,10 @@ body, html {
   bottom: 60px;
   left: 20px;
   z-index: 1000;
+}
+
+.audio-recorder {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

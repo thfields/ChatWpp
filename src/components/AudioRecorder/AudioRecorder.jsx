@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useRef } from 'react';
-import { Microphone, Stop, Play } from "@phosphor-icons/react";
+import { Microphone, Stop, PaperPlaneTilt  } from "@phosphor-icons/react";
 
 const AudioRecorder = ({ onSendAudio }) => {
   const [isRecording, setIsRecording] = useState(false);
@@ -50,8 +50,8 @@ const AudioRecorder = ({ onSendAudio }) => {
       ) : (
         <button onClick={startRecording}><Microphone size={32} /></button>
       )}
-      {audioBlob && !isRecording && (
-        <button onClick={sendAudio}><Play size={32} /></button>
+      {audioBlob && (
+        <button onClick={sendAudio}><PaperPlaneTilt  size={32} /></button>
       )}
     </div>
   );
