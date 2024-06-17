@@ -1,17 +1,16 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import { 
-    Smiley, Paperclip, Microphone, 
-    DownloadSimple, DotsThreeOutlineVertical,
-    MagnifyingGlass
-
-} from "@phosphor-icons/react";
-import Picker from 'emoji-picker-react';
+/* ChatArea.jsx */
+import { useState, useRef } from 'react';
+import { MagnifyingGlass, DotsThreeOutlineVertical, Paperclip, DownloadSimple, Smiley } from "@phosphor-icons/react";
 import InicialScreen from '../../pages/InicialSreen/InicialScreen';
+import EmojiPicker from '../EmojiPicker/EmojiPicker';
+import AudioRecorder from '../AudioRecorder/AudioRecorder';
 
 const ChatArea = ({ selectedContact, contactProfileImages, contactsMessages, onSendMessage, onFileChange }) => {
   const [messageInput, setMessageInput] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [emojiPickerPosition, setEmojiPickerPosition] = useState({ top: 0, left: 0 });
+  const emojiButtonRef = useRef(null); // Referência ao botão de emoji
 
   const handleInputChange = (event) => {
     setMessageInput(event.target.value);
@@ -32,6 +31,21 @@ const ChatArea = ({ selectedContact, contactProfileImages, contactsMessages, onS
     }
   };
 
+  const toggleEmojiPicker = () => {
+    setShowEmojiPicker(!showEmojiPicker);
+
+    // Calculando a posição do seletor de emojis acima do botão de emoji
+    if (emojiButtonRef.current) {
+      const buttonRect = emojiButtonRef.current.getBoundingClientRect();
+      const chatAreaRect = document.querySelector('.chat-area').getBoundingClientRect();
+
+      const top = buttonRect.top - chatAreaRect.top - buttonRect.height; // Posiciona acima do botão
+      const left = buttonRect.left - chatAreaRect.left;
+
+      setEmojiPickerPosition({ top, left });
+    }
+  };
+
   const onEmojiClick = (event, emojiObject) => {
     setMessageInput(prevInput => prevInput + emojiObject.emoji);
   };
@@ -49,7 +63,6 @@ const ChatArea = ({ selectedContact, contactProfileImages, contactsMessages, onS
                 <MagnifyingGlass size={32} />
                 <DotsThreeOutlineVertical size={22} />
               </div>
-              
             </div>
           </div>
           <div className="chat-messages">
@@ -73,12 +86,8 @@ const ChatArea = ({ selectedContact, contactProfileImages, contactsMessages, onS
             ))}
           </div>
           <div className="chat-input">
-            <button onClick={() => setShowEmojiPicker(!showEmojiPicker)}><Smiley size={32} /></button>
-            {showEmojiPicker && (
-              <div className="emoji-picker">
-                <Picker onEmojiClick={onEmojiClick} />
-              </div>
-            )}
+            <button ref={emojiButtonRef} className="emoji-button" onClick={toggleEmojiPicker}><Smiley size={32} /></button>
+            <EmojiPicker visible={showEmojiPicker} position={emojiPickerPosition} onClose={() => setShowEmojiPicker(false)} onEmojiClick={onEmojiClick} />
             <input
               type="file"
               id="file-input"
@@ -90,12 +99,13 @@ const ChatArea = ({ selectedContact, contactProfileImages, contactsMessages, onS
             </button>
             <input
               type="text"
+              className="message-input"
               placeholder={`Enviar mensagem para ${selectedContact}`}
               value={messageInput}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
             />
-            <button onClick={handleSendMessage}><Microphone size={32} /></button>
+            <AudioRecorder />
           </div>
         </>
       )}
