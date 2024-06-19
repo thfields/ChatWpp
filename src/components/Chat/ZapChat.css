@@ -113,9 +113,11 @@ body, html {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  height: 100%; /* Adicionado */
-  background-color: #e5ddd5; /* Ajustado para uma cor de fundo que combine */
+  height: 100%; /* Garante que a ChatArea ocupe toda a altura disponível */
+  background-color: #e5ddd5; /* Cor de fundo ajustada conforme desejado */
+  overflow: hidden; /* Evita que conteúdo excedente empurre a ChatArea para fora da tela */
 }
+
 
 .chat-header {
   display: flex;

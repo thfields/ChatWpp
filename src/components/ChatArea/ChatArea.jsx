@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import { MagnifyingGlass, DotsThreeOutlineVertical, DownloadSimple } from "@phosphor-icons/react";
 import InicialScreen from '../../pages/InicialSreen/InicialScreen';
+import ChatHeader from '../ChatHeader/ChatHeader';
+import ChatMessages from '../ChatMessages/ChatMessages';
 
 const ChatArea = ({ selectedContact, contactProfileImages, contactsMessages }) => {
   const [searchVisible, setSearchVisible] = useState(false);
@@ -33,48 +34,19 @@ const ChatArea = ({ selectedContact, contactProfileImages, contactsMessages }) =
       {!selectedContact && <InicialScreen />}
       {selectedContact && (
         <>
-          <div className="chat-header">
-            <div className="contact-info">
-              <img src={contactProfileImages[selectedContact]} alt={`${selectedContact}'s Profile`} className="profile-img" />
-              <h2 className="contact-name">{selectedContact}</h2>
-              <div className='icon-chat'>
-                <button onClick={toggleSearchBar}><MagnifyingGlass size={32} /></button>
-                
-              </div>
-              
-            </div>
-            {searchVisible && (
-              <div className="chat-search-bar">
-                <input
-                  type="text"
-                  placeholder="Pesquisar no chat..."
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                />
-              </div>
-            )}
-          <DotsThreeOutlineVertical size={22} />
-          </div>
-          <div className="chat-messages">
-            {filteredMessages.map((msg, index) => (
-              <div
-                key={index}
-                className={`message ${msg.sender === 'Me' ? 'sent' : 'received'}`}
-              >
-                <div className="message-content">
-                  {msg.file ? (
-                    <div className="file-message">
-                      <a href={msg.file} download={msg.content}>
-                        <DownloadSimple size={16} /> {msg.content}
-                      </a>
-                    </div>
-                  ) : (
-                    <span>{highlightText(msg.content, searchTerm)}</span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+          <ChatHeader 
+            selectedContact={selectedContact} 
+            contactProfileImages={contactProfileImages} 
+            toggleSearchBar={toggleSearchBar}
+            searchVisible={searchVisible}
+            searchTerm={searchTerm}
+            handleSearchChange={handleSearchChange}
+          />
+          <ChatMessages 
+            filteredMessages={filteredMessages}
+            highlightText={highlightText}
+            searchTerm={searchTerm}
+          />
         </>
       )}
     </div>
