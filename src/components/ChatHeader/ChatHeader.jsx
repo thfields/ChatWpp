@@ -1,14 +1,28 @@
 /* eslint-disable react/prop-types */
 import { MagnifyingGlass, DotsThreeOutlineVertical } from "@phosphor-icons/react";
 
-const ChatHeader = ({ selectedContact, contactProfileImages, toggleSearchBar, searchVisible, searchTerm, handleSearchChange }) => {
+const ChatHeader = ({
+  selectedContact,
+  contactProfileImages,
+  toggleSearchBar,
+  searchVisible,
+  searchTerm,
+  handleSearchChange,
+  handleSearchKeyPress, // Receber handleSearchKeyPress do componente pai
+}) => {
   return (
     <div className="chat-header">
       <div className="contact-info">
-        <img src={contactProfileImages[selectedContact]} alt={`${selectedContact}'s Profile`} className="profile-img" />
+        <img
+          src={contactProfileImages[selectedContact]}
+          alt={`${selectedContact}'s Profile`}
+          className="profile-img"
+        />
         <h2 className="contact-name">{selectedContact}</h2>
-        <div className='icon-chat'>
-          <button onClick={toggleSearchBar}><MagnifyingGlass size={32} /></button>
+        <div className="icon-chat">
+          <button onClick={toggleSearchBar}>
+            <MagnifyingGlass size={32} />
+          </button>
         </div>
       </div>
       {searchVisible && (
@@ -18,6 +32,7 @@ const ChatHeader = ({ selectedContact, contactProfileImages, toggleSearchBar, se
             placeholder="Pesquisar no chat..."
             value={searchTerm}
             onChange={handleSearchChange}
+            onKeyPress={handleSearchKeyPress} // Passar handleSearchKeyPress para o evento onKeyPress
           />
         </div>
       )}

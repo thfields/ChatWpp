@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import './ZapChat.css';
-import Contacts from '../Contacts/Contacts';
-import ChatArea from '../ChatArea/ChatArea';
-import MessageInput from '../MessageInput/MessageInput';
+import { useState } from "react";
+import "./ZapChat.css";
+import Contacts from "../Contacts/Contacts";
+import ChatArea from "../ChatArea/ChatArea";
+import MessageInput from "../MessageInput/MessageInput";
 
 const contactProfileImages = {
-  "Vitor": "/src/assets/vitor.PNG",
+  Vitor: "/src/assets/vitor.PNG",
   "(84) 99617-1333": "/src/assets/sem-foto.png",
-  "Thiago": "/src/assets/thiago.PNG",
+  Thiago: "/src/assets/thiago.PNG",
 };
 
 const ZapChat = () => {
@@ -15,14 +15,14 @@ const ZapChat = () => {
 
   const [selectedContact, setSelectedContact] = useState(null);
   const [contactsMessages, setContactsMessages] = useState({});
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleContactClick = (contact) => {
     setSelectedContact(contact);
     if (!contactsMessages[contact]) {
       setContactsMessages({
         ...contactsMessages,
-        [contact]: []
+        [contact]: [],
       });
     }
   };
@@ -33,13 +33,13 @@ const ZapChat = () => {
 
   const handleSendMessage = (contact, message) => {
     const newMessage = {
-      sender: 'Me',
+      sender: "Me",
       content: message,
       file: null,
     };
     setContactsMessages({
       ...contactsMessages,
-      [contact]: [...contactsMessages[contact], newMessage]
+      [contact]: [...contactsMessages[contact], newMessage],
     });
   };
 
@@ -47,13 +47,13 @@ const ZapChat = () => {
     const file = event.target.files[0];
     if (file && contact) {
       const newMessage = {
-        sender: 'Me',
+        sender: "Me",
         content: file.name,
-        file: URL.createObjectURL(file)
+        file: URL.createObjectURL(file),
       };
       setContactsMessages({
         ...contactsMessages,
-        [contact]: [...contactsMessages[contact], newMessage]
+        [contact]: [...contactsMessages[contact], newMessage],
       });
     }
   };
@@ -61,13 +61,13 @@ const ZapChat = () => {
   const handleSendAudio = (audioBlob) => {
     const url = URL.createObjectURL(audioBlob);
     const newMessage = {
-      sender: 'Me',
-      content: 'Audio message',
-      file: url
+      sender: "Me",
+      content: "Audio message",
+      file: url,
     };
     setContactsMessages({
       ...contactsMessages,
-      [selectedContact]: [...contactsMessages[selectedContact], newMessage]
+      [selectedContact]: [...contactsMessages[selectedContact], newMessage],
     });
   };
 
@@ -97,7 +97,6 @@ const ZapChat = () => {
         )}
       </div>
     </div>
-
   );
 };
 
