@@ -3,12 +3,16 @@ import { useEffect, useRef } from "react";
 import { DownloadSimple } from "@phosphor-icons/react";
 
 const ChatMessages = ({
-  filteredMessages,
+  filteredMessages = [], // Valor padrão para garantir que seja um array
   highlightText,
   searchTerm,
   highlightedMessageIndex,
 }) => {
   const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const scrollToHighlightedMessage = () => {
     const highlightedMessage = document.querySelector(".highlighted-message");
@@ -21,6 +25,43 @@ const ChatMessages = ({
     scrollToHighlightedMessage();
   }, [highlightedMessageIndex]);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [filteredMessages]);
+
+  const renderFileContent = (file, content) => {
+    if (file) {
+      const fileExtension = file.split('.').pop().toLowerCase();
+      if (["jpg", "jpeg", "png", "gif"].includes(fileExtension)) {
+        return <img src={file} alt={content} className="message-image" />;
+      } else if (["mp4", "webm", "ogg"].includes(fileExtension)) {
+        return (
+          <video controls className="message-video">
+            <source src={file} type={`video/${fileExtension}`} />
+            Your browser does not support the video tag.
+          </video>
+        );
+      } else if (["mp3", "wav", "ogg"].includes(fileExtension)) {
+        return (
+          <audio controls className="message-audio">
+            <source src={file} type={`audio/${fileExtension}`} />
+            Your browser does not support the audio element.
+          </audio>
+        );
+      } else {
+        return (
+          <div className="file-message">
+            <a href={file} download={content}>
+              <DownloadSimple size={16} /> {content}
+            </a>
+          </div>
+        );
+      }
+    } else {
+      return <span>{highlightText(content, searchTerm)}</span>;
+    }
+  };
+
   return (
     <div className="chat-messages">
       {filteredMessages.map((msg, index) => (
@@ -32,15 +73,7 @@ const ChatMessages = ({
           data-index={index}
         >
           <div className="message-content">
-            {msg.file ? (
-              <div className="file-message">
-                <a href={msg.file} download={msg.content}>
-                  <DownloadSimple size={16} /> {msg.content}
-                </a>
-              </div>
-            ) : (
-              <span>{highlightText(msg.content, searchTerm)}</span>
-            )}
+            {renderFileContent(msg.file, msg.content)}
           </div>
         </div>
       ))}
